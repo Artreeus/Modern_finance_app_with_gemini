@@ -6,8 +6,23 @@ import Transaction from '@/models/Transaction';
 import MonthlySummary from '@/models/MonthlySummary';
 import User from '@/models/User';
 import { parseMonthParam, getMonthName, paisaToBdt } from '@/lib/utils';
-import { renderToStream } from '@react-pdf/renderer';
-import { MonthlyReportPDF } from '@/components/pdf/MonthlyReportPDF';
+import React from 'react';
+
+// Dynamic import for React-PDF to avoid SSR issues
+const renderPDF = async (data: any) => {
+  const ReactPDF = await import('@react-pdf/renderer');
+  const { MonthlyReportPDF } = await import('@/components/pdf/MonthlyReportPDF');
+  
+  const doc = MonthlyReportPDF({ data });
+  const stream = await ReactPDF.renderToStream(doc);
+  
+  return new Promise<Buffer>((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    stream.on('data', (chunk: Buffer) => chunks.push(chunk));
+    stream.on('end', () => resolve(Buffer.concat(chunks)));
+    stream.on('error', reject);
+  });
+};
 
 // GET /api/pdf/:month - Generate PDF for a specific month
 export async function GET(
@@ -78,23 +93,26 @@ export async function GET(
       })),
     };
 
-    // Generate PDF
-    const stream = await renderToStream(<MonthlyReportPDF data={data} />);
+    try {
+      // Generate PDF
+      const pdfBuffer = await renderPDF(data);
 
-    // Convert stream to buffer
-    const chunks: Uint8Array[] = [];
-    for await (const chunk of stream) {
-      chunks.push(chunk);
+      // Return PDF
+      return new NextResponse(pdfBuffer, {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/pdf',
+          'Content-Disposition': `attachment; filename="finance-report-${year}-${String(month).padStart(2, '0')}.pdf"`,
+          'Cache-Control': 'no-store, max-age=0',
+        },
+      });
+    } catch (pdfError) {
+      console.error('PDF generation error:', pdfError);
+      return NextResponse.json(
+        { error: 'Failed to generate PDF', details: (pdfError as Error).message },
+        { status: 500 }
+      );
     }
-    const buffer = Buffer.concat(chunks);
-
-    // Return PDF
-    return new NextResponse(buffer, {
-      headers: {
-        'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="finance-report-${year}-${String(month).padStart(2, '0')}.pdf"`,
-      },
-    });
   } catch (error) {
     console.error('Failed to generate PDF:', error);
     return NextResponse.json(

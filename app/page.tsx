@@ -1,83 +1,205 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { TrendingUp, Shield, Zap, BarChart3, ArrowRight, CheckCircle2 } from 'lucide-react';
 
-export default async function Home() {
-  const session = await getServerSession(authOptions);
+export default function Home() {
+    const { data: session, status } = useSession();
+    const [mounted, setMounted] = useState(false);
 
-  if (session) {
-    redirect('/dashboard');
-  }
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100">
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold text-primary-800 mb-6">
-            Finance App (BDT)
-          </h1>
-          <p className="text-xl text-gray-700 mb-8">
-            Manage your finances intelligently with AI-powered insights for Bangladesh
-          </p>
-          
-          <div className="bg-white rounded-lg shadow-xl p-8 mb-12">
-            <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-              Key Features
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-              <div className="p-4 border rounded-lg">
-                <h3 className="font-semibold text-lg text-primary-600 mb-2">
-                  💰 Track Transactions
-                </h3>
-                <p className="text-gray-600">
-                  Manage income, expenses, and transfers in BDT with ease
-                </p>
-              </div>
-              <div className="p-4 border rounded-lg">
-                <h3 className="font-semibold text-lg text-primary-600 mb-2">
-                  📊 Monthly Reports
-                </h3>
-                <p className="text-gray-600">
-                  Automated monthly summaries and PDF exports
-                </p>
-              </div>
-              <div className="p-4 border rounded-lg">
-                <h3 className="font-semibold text-lg text-primary-600 mb-2">
-                  🤖 AI Financial Advice
-                </h3>
-                <p className="text-gray-600">
-                  Get personalized advice powered by Gemini AI
-                </p>
-              </div>
-              <div className="p-4 border rounded-lg">
-                <h3 className="font-semibold text-lg text-primary-600 mb-2">
-                  📸 Receipt Upload
-                </h3>
-                <p className="text-gray-600">
-                  Store receipts securely with Cloudinary integration
-                </p>
-              </div>
+    if (status === 'loading' || !mounted) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
             </div>
-          </div>
+        );
+    }
 
-          <div className="flex gap-4 justify-center">
-            <Link
-              href="/auth/signin"
-              className="bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/auth/register"
-              className="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold border-2 border-primary-600 hover:bg-primary-50 transition"
-            >
-              Register
-            </Link>
-          </div>
+    if (session) {
+        redirect('/dashboard');
+    }
+
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+            },
+        },
+    };
+
+    const itemVariants = {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+        },
+    };
+
+    const features = [
+        {
+            icon: <TrendingUp className="w-8 h-8" />,
+            title: 'Track Transactions',
+            description: 'Manage income, expenses, and transfers in BDT with intelligent categorization',
+            color: 'from-green-400 to-green-600',
+        },
+        {
+            icon: <BarChart3 className="w-8 h-8" />,
+            title: 'Advanced Analytics',
+            description: 'Visualize spending patterns with interactive charts and insights',
+            color: 'from-blue-400 to-blue-600',
+        },
+        {
+            icon: <Zap className="w-8 h-8" />,
+            title: 'AI Financial Advice',
+            description: 'Get personalized recommendations powered by Gemini AI',
+            color: 'from-purple-400 to-purple-600',
+        },
+        {
+            icon: <Shield className="w-8 h-8" />,
+            title: 'Secure & Private',
+            description: 'Bank-level encryption with cloud backup and receipt storage',
+            color: 'from-orange-400 to-orange-600',
+        },
+    ];
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100">
+            {/* Hero Section */}
+            <div className="container mx-auto px-4 py-20">
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="max-w-6xl mx-auto"
+                >
+                    {/* Header */}
+                    <motion.div variants={itemVariants} className="text-center mb-16">
+                        <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+                            className="inline-block mb-4"
+                        >
+                            <span className="bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold">
+                                🇧🇩 Made for Bangladesh
+                            </span>
+                        </motion.div>
+
+                        <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6">
+                            <span className="bg-gradient-to-r from-primary-600 to-green-600 bg-clip-text text-transparent">
+                                Smart Finance
+                            </span>
+                            <br />
+                            Management
+                        </h1>
+
+                        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                            Take control of your finances with AI-powered insights, beautiful analytics,
+                            and automatic expense tracking—all in Bangladeshi Taka.
+                        </p>
+
+                        <motion.div
+                            variants={itemVariants}
+                            className="flex gap-4 justify-center flex-wrap"
+                        >
+                            <Link
+                                href="/auth/register"
+                                className="group relative px-8 py-4 bg-gradient-to-r from-primary-600 to-green-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+                            >
+                                Get Started Free
+                                <ArrowRight className="inline-block ml-2 group-hover:translate-x-1 transition-transform" size={20} />
+                            </Link>
+                            <Link
+                                href="/auth/signin"
+                                className="px-8 py-4 bg-white text-gray-700 rounded-xl font-semibold text-lg shadow-md hover:shadow-lg border-2 border-gray-200 hover:border-primary-300 transition-all transform hover:scale-105"
+                            >
+                                Sign In
+                            </Link>
+                        </motion.div>
+                    </motion.div>
+
+                    {/* Features Grid */}
+                    <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                        {features.map((feature, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 + index * 0.1 }}
+                                whileHover={{ scale: 1.05, y: -5 }}
+                                className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all"
+                            >
+                                <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white mb-4`}>
+                                    {feature.icon}
+                                </div>
+                                <h3 className="text-lg font-bold text-gray-800 mb-2">{feature.title}</h3>
+                                <p className="text-gray-600 text-sm">{feature.description}</p>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+
+                    {/* Benefits */}
+                    <motion.div
+                        variants={itemVariants}
+                        className="bg-gradient-to-br from-primary-600 to-green-600 rounded-3xl p-12 text-white mb-16"
+                    >
+                        <div className="max-w-4xl mx-auto">
+                            <h2 className="text-4xl font-bold mb-8 text-center">Why Choose Finance App?</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {[
+                                    'Automatic expense categorization',
+                                    'Beautiful data visualizations',
+                                    'AI-powered financial insights',
+                                    'Secure cloud backup',
+                                    'Monthly PDF reports',
+                                    'Multi-device sync',
+                                ].map((benefit, index) => (
+                                    <motion.div
+                                        key={index}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.5 + index * 0.1 }}
+                                        className="flex items-center gap-3"
+                                    >
+                                        <CheckCircle2 className="w-6 h-6 flex-shrink-0" />
+                                        <span className="text-lg">{benefit}</span>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* CTA */}
+                    <motion.div
+                        variants={itemVariants}
+                        className="text-center bg-white rounded-3xl p-12 shadow-xl"
+                    >
+                        <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                            Ready to Take Control?
+                        </h2>
+                        <p className="text-lg text-gray-600 mb-8">
+                            Join thousands of users managing their finances smarter
+                        </p>
+                        <Link
+                            href="/auth/register"
+                            className="inline-block px-10 py-4 bg-gradient-to-r from-primary-600 to-green-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+                        >
+                            Start Your Journey →
+                        </Link>
+                    </motion.div>
+                </motion.div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 

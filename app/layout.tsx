@@ -6,21 +6,21 @@ import { Providers } from '@/components/Providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Finance App - Bangladesh',
-  description: 'Manage your finances in BDT with AI-powered insights',
+    title: 'Finance App - Bangladesh',
+    description: 'Manage your finances in BDT with AI-powered insights',
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body className={inter.className}>
+                <Providers>{children}</Providers>
+            </body>
+        </html>
+    );
 }
 
