@@ -17,6 +17,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    // Check if Gemini API key is configured
+    if (!process.env.GEMINI_API_KEY) {
+      return NextResponse.json(
+        { 
+          error: 'AI feature is not configured. Please add GEMINI_API_KEY to your .env file.',
+          details: 'Get your free API key from https://makersuite.google.com/app/apikey'
+        },
+        { status: 503 }
+      );
+    }
+
     await connectDB();
 
     const userId = (session.user as any).id;
@@ -27,7 +38,7 @@ export async function POST(req: NextRequest) {
 
     if (!summary) {
       return NextResponse.json(
-        { error: 'No financial data available for current month' },
+        { error: 'No financial data available for current month. Add some transactions first!' },
         { status: 404 }
       );
     }
@@ -50,30 +61,44 @@ Category Breakdown: ${breakdownText}
 
 Provide concise, actionable financial advice (3-5 bullet points) considering Bangladesh's economic context.`;
 
-    // Call Gemini API
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
-    const result = await model.generateContent(prompt);
-    const response = result.response.text();
+    try {
+      // Call Gemini API with timeout
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+      const result = await model.generateContent(prompt);
+      const response = result.response.text();
 
-    // Store advice
-    const advice = await Advice.create({
-      userId,
-      prompt,
-      response,
-    });
+      // Store advice
+      const advice = await Advice.create({
+        userId,
+        prompt,
+        response,
+      });
 
-    return NextResponse.json({
-      message: 'Advice generated',
-      advice: {
-        id: advice._id,
-        response: advice.response,
-        createdAt: advice.createdAt,
-      },
-    });
-  } catch (error) {
+      return NextResponse.json({
+        message: 'Advice generated',
+        advice: {
+          id: advice._id,
+          response: advice.response,
+          createdAt: advice.createdAt,
+        },
+      });
+    } catch (aiError: any) {
+      console.error('Gemini API error:', aiError);
+      return NextResponse.json(
+        { 
+          error: 'Failed to generate AI advice. Please try again later.',
+          details: aiError.message || 'AI service temporarily unavailable'
+        },
+        { status: 500 }
+      );
+    }
+  } catch (error: any) {
     console.error('Failed to generate advice:', error);
     return NextResponse.json(
-      { error: 'Failed to generate advice' },
+      { 
+        error: 'Failed to generate advice',
+        details: error.message || 'Unknown error occurred'
+      },
       { status: 500 }
     );
   }

@@ -51,10 +51,10 @@ export function MonthlySummary({ month }: { month: string }) {
     }
 
     return (
-        <Card hover className="p-6 bg-white/80 backdrop-blur-lg border border-white/20">
+        <Card hover className="p-6 bg-white/90 dark:bg-dark-800/90 backdrop-blur-lg border border-gray-100 dark:border-dark-700">
             <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-gray-800">Monthly Summary</h2>
-                <Wallet className="text-primary-600" size={24} />
+                <h2 className="text-xl font-bold text-gray-800 dark:text-white">Monthly Summary</h2>
+                <Wallet className="text-primary-500 dark:text-primary-400" size={24} />
             </div>
 
             {summary ? (

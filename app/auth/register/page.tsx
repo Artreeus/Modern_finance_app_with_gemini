@@ -44,8 +44,8 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center px-4">
-            <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-200">
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-dark-950 dark:via-dark-900 dark:to-dark-800 flex items-center justify-center px-4 transition-colors">
+            <div className="bg-white dark:bg-dark-800 p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-200 dark:border-dark-700">
                 <h1 className="text-3xl font-bold text-center text-gray-900 mb-6">
                     Create Account
                 </h1>

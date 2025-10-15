@@ -67,35 +67,35 @@ export function TransactionList({ month }: { month: string }) {
             {transactions.map((txn) => (
                 <div
                     key={txn._id}
-                    className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition"
+                    className="border border-gray-200 dark:border-dark-600 rounded-lg p-4 hover:shadow-md dark:hover:shadow-xl transition bg-white dark:bg-dark-700/50"
                 >
                     <div className="flex justify-between items-start">
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
                                 <span
                                     className={`px-2 py-1 text-xs font-semibold rounded ${txn.type === 'income'
-                                            ? 'bg-green-100 text-green-700'
-                                            : txn.type === 'expense'
-                                                ? 'bg-red-100 text-red-700'
-                                                : 'bg-blue-100 text-blue-700'
+                                        ? 'bg-green-100 text-green-700'
+                                        : txn.type === 'expense'
+                                            ? 'bg-red-100 text-red-700'
+                                            : 'bg-blue-100 text-blue-700'
                                         }`}
                                 >
                                     {txn.type}
                                 </span>
                                 <span className="text-sm text-gray-600">{txn.category}</span>
                             </div>
-                            <p className="text-gray-800 font-medium">{txn.note || 'No note'}</p>
-                            <p className="text-xs text-gray-500 mt-1">
+                            <p className="text-gray-800 dark:text-gray-200 font-medium">{txn.note || 'No note'}</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                                 {new Date(txn.occurredAt).toLocaleDateString()}
                             </p>
                         </div>
                         <div className="text-right">
-                            <p className={`text-lg font-bold ${txn.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
+                            <p className={`text-lg font-bold ${txn.type === 'income' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                                 {txn.type === 'income' ? '+' : '-'} {formatBDT(txn.amount)}
                             </p>
                             <button
                                 onClick={() => handleDelete(txn._id)}
-                                className="text-xs text-red-500 hover:text-red-700 mt-2"
+                                className="text-xs text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 mt-2 font-medium"
                             >
                                 Delete
                             </button>

@@ -11,6 +11,7 @@ import { MonthlySummary } from './MonthlySummary';
 import { AIAdvice } from './AIAdvice';
 import { Plus, LogOut, BarChart3, Settings, User } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 export function DashboardClient() {
     const { data: session } = useSession();
@@ -40,13 +41,15 @@ export function DashboardClient() {
 
     return (
         <>
-            <Toaster position="top-right" />
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-primary-50">
+            <Toaster position="top-right" toastOptions={{
+                className: 'dark:bg-dark-800 dark:text-white',
+            }} />
+            <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50 dark:from-dark-950 dark:via-dark-900 dark:to-dark-800 transition-colors">
                 {/* Header */}
                 <motion.header
                     initial={{ y: -100 }}
                     animate={{ y: 0 }}
-                    className="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50 border-b border-gray-200"
+                    className="bg-white/80 dark:bg-dark-900/80 backdrop-blur-lg shadow-sm sticky top-0 z-50 border-b border-gray-200 dark:border-dark-700 transition-colors"
                 >
                     <div className="container mx-auto px-4 py-4">
                         <div className="flex justify-between items-center">
@@ -55,24 +58,26 @@ export function DashboardClient() {
                                 animate={{ opacity: 1 }}
                                 className="flex items-center gap-4"
                             >
-                                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-green-600 bg-clip-text text-transparent">
+                                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">
                                     Finance App
                                 </h1>
                             </motion.div>
 
                             <div className="flex items-center gap-3">
+                                <ThemeToggle />
+
                                 <motion.div
                                     initial={{ opacity: 0, x: 20 }}
                                     animate={{ opacity: 1, x: 0 }}
-                                    className="flex items-center gap-2 bg-primary-50 px-4 py-2 rounded-lg"
+                                    className="flex items-center gap-2 bg-primary-50 dark:bg-primary-900/30 px-4 py-2 rounded-lg border border-primary-100 dark:border-primary-800"
                                 >
-                                    <User size={18} className="text-primary-600" />
-                                    <span className="text-gray-700 font-medium">{session?.user?.name}</span>
+                                    <User size={18} className="text-primary-600 dark:text-primary-400" />
+                                    <span className="text-gray-700 dark:text-gray-300 font-medium">{session?.user?.name}</span>
                                 </motion.div>
 
                                 <Link
                                     href="/analytics"
-                                    className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-all transform hover:scale-105"
+                                    className="flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-all transform hover:scale-105 border border-blue-100 dark:border-blue-800"
                                 >
                                     <BarChart3 size={18} />
                                     <span className="hidden md:inline font-medium">Analytics</span>
@@ -81,7 +86,7 @@ export function DashboardClient() {
                                 {(session?.user as any)?.role === 'admin' && (
                                     <Link
                                         href="/admin"
-                                        className="flex items-center gap-2 px-4 py-2 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-all transform hover:scale-105"
+                                        className="flex items-center gap-2 px-4 py-2 bg-accent-50 dark:bg-accent-900/30 text-accent-700 dark:text-accent-400 rounded-lg hover:bg-accent-100 dark:hover:bg-accent-900/50 transition-all transform hover:scale-105 border border-accent-100 dark:border-accent-800"
                                     >
                                         <Settings size={18} />
                                         <span className="hidden md:inline font-medium">Admin</span>
@@ -92,7 +97,7 @@ export function DashboardClient() {
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                     onClick={handleLogout}
-                                    className="flex items-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition"
+                                    className="flex items-center gap-2 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-4 py-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/50 transition border border-red-100 dark:border-red-800"
                                 >
                                     <LogOut size={18} />
                                     <span className="hidden md:inline font-medium">Logout</span>
@@ -122,15 +127,15 @@ export function DashboardClient() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.3 }}
-                                className="bg-white/80 backdrop-blur-lg rounded-xl shadow-lg p-6 border border-white/20"
+                                className="bg-white/90 dark:bg-dark-800/90 backdrop-blur-lg rounded-xl shadow-lg p-6 border border-gray-100 dark:border-dark-700"
                             >
                                 <div className="flex justify-between items-center mb-6">
-                                    <h2 className="text-2xl font-bold text-gray-800">Recent Transactions</h2>
+                                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Recent Transactions</h2>
                                     <motion.button
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => setShowAddModal(true)}
-                                        className="flex items-center gap-2 bg-gradient-to-r from-primary-600 to-green-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all font-semibold"
+                                        className="flex items-center gap-2 bg-gradient-to-r from-primary-500 to-accent-500 text-white px-6 py-3 rounded-xl hover:shadow-xl transition-all font-semibold"
                                     >
                                         <Plus size={20} />
                                         Add Transaction

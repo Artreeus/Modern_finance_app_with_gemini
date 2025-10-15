@@ -73,7 +73,7 @@ export default function Home() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100">
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100 dark:from-dark-950 dark:via-dark-900 dark:to-dark-800">
             {/* Hero Section */}
             <div className="container mx-auto px-4 py-20">
                 <motion.div
@@ -95,15 +95,15 @@ export default function Home() {
                             </span>
                         </motion.div>
 
-                        <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6">
-                            <span className="bg-gradient-to-r from-primary-600 to-green-600 bg-clip-text text-transparent">
+                        <h1 className="text-6xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6">
+                            <span className="bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">
                                 Smart Finance
                             </span>
                             <br />
-                            Management
+                            <span className="dark:text-white">Management</span>
                         </h1>
 
-                        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                        <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
                             Take control of your finances with AI-powered insights, beautiful analytics,
                             and automatic expense tracking—all in Bangladeshi Taka.
                         </p>
@@ -114,14 +114,14 @@ export default function Home() {
                         >
                             <Link
                                 href="/auth/register"
-                                className="group relative px-8 py-4 bg-gradient-to-r from-primary-600 to-green-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+                                className="group relative px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-2xl transition-all transform hover:scale-105"
                             >
                                 Get Started Free
                                 <ArrowRight className="inline-block ml-2 group-hover:translate-x-1 transition-transform" size={20} />
                             </Link>
                             <Link
                                 href="/auth/signin"
-                                className="px-8 py-4 bg-white text-gray-700 rounded-xl font-semibold text-lg shadow-md hover:shadow-lg border-2 border-gray-200 hover:border-primary-300 transition-all transform hover:scale-105"
+                                className="px-8 py-4 bg-white dark:bg-dark-800 text-gray-700 dark:text-gray-200 rounded-xl font-semibold text-lg shadow-md hover:shadow-lg border-2 border-gray-200 dark:border-dark-600 hover:border-primary-400 dark:hover:border-primary-400 transition-all transform hover:scale-105"
                             >
                                 Sign In
                             </Link>
@@ -137,13 +137,13 @@ export default function Home() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 + index * 0.1 }}
                                 whileHover={{ scale: 1.05, y: -5 }}
-                                className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all"
+                                className="bg-white dark:bg-dark-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all border border-gray-100 dark:border-dark-700"
                             >
                                 <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white mb-4`}>
                                     {feature.icon}
                                 </div>
-                                <h3 className="text-lg font-bold text-gray-800 mb-2">{feature.title}</h3>
-                                <p className="text-gray-600 text-sm">{feature.description}</p>
+                                <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">{feature.title}</h3>
+                                <p className="text-gray-600 dark:text-gray-400 text-sm">{feature.description}</p>
                             </motion.div>
                         ))}
                     </motion.div>
@@ -151,10 +151,10 @@ export default function Home() {
                     {/* Benefits */}
                     <motion.div
                         variants={itemVariants}
-                        className="bg-gradient-to-br from-primary-600 to-green-600 rounded-3xl p-12 text-white mb-16"
+                        className="bg-gradient-to-br from-primary-500 via-primary-600 to-accent-600 dark:from-primary-700 dark:via-primary-800 dark:to-accent-800 rounded-3xl p-12 text-white mb-16 shadow-2xl"
                     >
                         <div className="max-w-4xl mx-auto">
-                            <h2 className="text-4xl font-bold mb-8 text-center">Why Choose Finance App?</h2>
+                            <h2 className="text-4xl font-bold mb-8 text-center drop-shadow-lg">Why Choose Finance App?</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {[
                                     'Automatic expense categorization',
@@ -182,17 +182,17 @@ export default function Home() {
                     {/* CTA */}
                     <motion.div
                         variants={itemVariants}
-                        className="text-center bg-white rounded-3xl p-12 shadow-xl"
+                        className="text-center bg-white dark:bg-dark-800 rounded-3xl p-12 shadow-xl border border-gray-100 dark:border-dark-700"
                     >
-                        <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                        <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
                             Ready to Take Control?
                         </h2>
-                        <p className="text-lg text-gray-600 mb-8">
+                        <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
                             Join thousands of users managing their finances smarter
                         </p>
                         <Link
                             href="/auth/register"
-                            className="inline-block px-10 py-4 bg-gradient-to-r from-primary-600 to-green-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+                            className="inline-block px-10 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-2xl transition-all transform hover:scale-105"
                         >
                             Start Your Journey →
                         </Link>

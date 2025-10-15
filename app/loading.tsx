@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export default function Loading() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center">
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 dark:from-dark-950 dark:to-dark-900 flex items-center justify-center transition-colors">
             <div className="text-center">
                 <motion.div
                     animate={{
@@ -15,7 +15,7 @@ export default function Loading() {
                         repeat: Infinity,
                         ease: "linear",
                     }}
-                    className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full mx-auto mb-4"
+                    className="w-16 h-16 border-4 border-primary-500 dark:border-primary-400 border-t-transparent rounded-full mx-auto mb-4"
                 />
 
                 <motion.div
@@ -23,8 +23,8 @@ export default function Loading() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
                 >
-                    <h2 className="text-xl font-semibold text-gray-700 mb-2">Loading...</h2>
-                    <p className="text-sm text-gray-500">Please wait while we prepare your data</p>
+                    <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2">Loading...</h2>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Please wait while we prepare your data</p>
                 </motion.div>
 
                 <motion.div
