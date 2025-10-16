@@ -3,17 +3,12 @@ export function cn(...inputs: any[]) {
 }
 
 /**
- * Format amount as currency (using USD format with $ symbol)
- * @param amount - Amount in dollars/BDT
- * @returns Formatted string like "$1,234.56"
+ * Format amount as currency with Taka symbol
+ * @param amount - Amount in BDT/Taka
+ * @returns Formatted string like "৳1,234"
  */
 export function formatBDT(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
+  return '৳' + Math.round(amount).toLocaleString('en-US');
 }
 
 /**
