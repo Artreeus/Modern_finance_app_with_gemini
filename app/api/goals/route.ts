@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
         }
 
         const body = await request.json();
-        const { name, description, targetAmount, category, priority, targetDate } = body;
+        const { name, description, targetAmount, currentAmount, category, priority, deadline } = body;
 
         if (!name || !targetAmount) {
             return NextResponse.json(
@@ -65,21 +65,21 @@ export async function POST(request: NextRequest) {
 
         // Create default milestones (25%, 50%, 75%, 100%)
         const milestones = [
-            { percentage: 25, achieved: false },
-            { percentage: 50, achieved: false },
-            { percentage: 75, achieved: false },
-            { percentage: 100, achieved: false },
+            { percentage: 25, achieved: false, amount: Math.round(targetAmount * 0.25) },
+            { percentage: 50, achieved: false, amount: Math.round(targetAmount * 0.50) },
+            { percentage: 75, achieved: false, amount: Math.round(targetAmount * 0.75) },
+            { percentage: 100, achieved: false, amount: Math.round(targetAmount) },
         ];
 
         const goal = await Goal.create({
             userId: user._id,
             name,
             description,
-            targetAmount: Math.round(targetAmount), // Ensure integer (paisa)
-            currentAmount: 0,
+            targetAmount: Math.round(targetAmount),
+            currentAmount: Math.round(currentAmount || 0),
             category: category || 'savings',
             priority: priority || 'medium',
-            targetDate: targetDate ? new Date(targetDate) : undefined,
+            targetDate: deadline ? new Date(deadline) : undefined,
             status: 'active',
             milestones,
         });

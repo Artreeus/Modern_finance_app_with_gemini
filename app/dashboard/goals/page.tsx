@@ -33,7 +33,7 @@ interface Goal {
     category: string;
     targetAmount: number;
     currentAmount: number;
-    deadline: string;
+    targetDate?: string;
     status: 'active' | 'completed' | 'paused';
     priority: 'low' | 'medium' | 'high';
     milestones: Milestone[];
@@ -129,9 +129,10 @@ export default function GoalsPage() {
         return Math.min((goal.currentAmount / goal.targetAmount) * 100, 100);
     };
 
-    const getDaysRemaining = (deadline: string) => {
+    const getDaysRemaining = (targetDate?: string) => {
+        if (!targetDate) return null;
         const today = new Date();
-        const end = new Date(deadline);
+        const end = new Date(targetDate);
         const diff = Math.ceil((end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
         return diff;
     };
@@ -230,7 +231,7 @@ export default function GoalsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {goals.map((goal) => {
                             const progress = getProgressPercentage(goal);
-                            const daysLeft = getDaysRemaining(goal.deadline);
+                            const daysLeft = getDaysRemaining(goal.targetDate);
 
                             return (
                                 <div
@@ -295,16 +296,18 @@ export default function GoalsPage() {
                                     </div>
 
                                     {/* Deadline */}
-                                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
-                                        <Calendar className="w-4 h-4" />
-                                        <span>
-                                            {daysLeft > 0
-                                                ? `${daysLeft} days remaining`
-                                                : daysLeft === 0
-                                                ? 'Due today'
-                                                : `${Math.abs(daysLeft)} days overdue`}
-                                        </span>
-                                    </div>
+                                    {daysLeft !== null && (
+                                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                            <Calendar className="w-4 h-4" />
+                                            <span>
+                                                {daysLeft > 0
+                                                    ? `${daysLeft} days remaining`
+                                                    : daysLeft === 0
+                                                    ? 'Due today'
+                                                    : `${Math.abs(daysLeft)} days overdue`}
+                                            </span>
+                                        </div>
+                                    )}
 
                                     {/* Status Badge */}
                                     {goal.status === 'completed' && (

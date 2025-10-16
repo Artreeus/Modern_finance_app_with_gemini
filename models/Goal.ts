@@ -6,12 +6,13 @@ export interface IGoal extends Document {
     description?: string;
     targetAmount: number; // in paisa
     currentAmount: number; // in paisa
-    category: 'savings' | 'house' | 'car' | 'vacation' | 'emergency' | 'education' | 'retirement' | 'other';
+    category: 'savings' | 'investment' | 'debt' | 'emergency' | 'vacation' | 'education' | 'home' | 'retirement' | 'other';
     priority: 'low' | 'medium' | 'high';
     targetDate?: Date;
     status: 'active' | 'completed' | 'paused' | 'cancelled';
     milestones: {
         percentage: number;
+        amount: number;
         achieved: boolean;
         achievedAt?: Date;
     }[];
@@ -48,7 +49,7 @@ const GoalSchema = new Schema<IGoal>(
         },
         category: {
             type: String,
-            enum: ['savings', 'house', 'car', 'vacation', 'emergency', 'education', 'retirement', 'other'],
+            enum: ['savings', 'investment', 'debt', 'emergency', 'vacation', 'education', 'home', 'retirement', 'other'],
             default: 'savings',
         },
         priority: {
@@ -67,6 +68,7 @@ const GoalSchema = new Schema<IGoal>(
         milestones: [
             {
                 percentage: { type: Number, required: true },
+                amount: { type: Number, required: true },
                 achieved: { type: Boolean, default: false },
                 achievedAt: { type: Date },
             },
