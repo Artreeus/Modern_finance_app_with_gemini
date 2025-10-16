@@ -10,7 +10,7 @@ import {
     TrendingUp, Shield, Zap, BarChart3, ArrowRight, CheckCircle2, 
     Users, Star, Quote, FileText, CreditCard, Wallet, 
     PieChart, TrendingDown, Lock, Cloud, Smartphone, Download,
-    ChevronDown, Sparkles, Target, Clock
+    ChevronDown, Sparkles, Target, Clock, Rocket, Brain, LineChart
 } from 'lucide-react';
 
 export default function Home() {
@@ -65,37 +65,49 @@ export default function Home() {
             icon: <TrendingUp className="w-8 h-8" />,
             title: 'Smart Tracking',
             description: 'Automatically categorize and track every transaction in BDT',
-            color: 'from-green-400 to-green-600',
+            color: 'from-success-500 to-success-600',
+            iconBg: 'bg-success-100 dark:bg-success-900/20',
+            iconColor: 'text-success-600 dark:text-success-400',
         },
         {
             icon: <BarChart3 className="w-8 h-8" />,
             title: 'Visual Analytics',
             description: 'Beautiful charts and insights to understand your spending',
-            color: 'from-blue-400 to-blue-600',
+            color: 'from-primary-500 to-primary-600',
+            iconBg: 'bg-primary-100 dark:bg-primary-900/20',
+            iconColor: 'text-primary-600 dark:text-primary-400',
         },
         {
-            icon: <Zap className="w-8 h-8" />,
+            icon: <Brain className="w-8 h-8" />,
             title: 'AI Powered',
             description: 'Get personalized financial advice from Gemini AI',
-            color: 'from-purple-400 to-purple-600',
+            color: 'from-accent-500 to-accent-600',
+            iconBg: 'bg-accent-100 dark:bg-accent-900/20',
+            iconColor: 'text-accent-600 dark:text-accent-400',
         },
         {
             icon: <Shield className="w-8 h-8" />,
             title: 'Bank-Grade Security',
             description: 'Your data is encrypted and stored securely in the cloud',
-            color: 'from-orange-400 to-orange-600',
+            color: 'from-primary-600 to-primary-700',
+            iconBg: 'bg-primary-100 dark:bg-primary-900/20',
+            iconColor: 'text-primary-700 dark:text-primary-300',
         },
         {
             icon: <FileText className="w-8 h-8" />,
             title: 'PDF Reports',
             description: 'Download detailed monthly reports with one click',
-            color: 'from-red-400 to-red-600',
+            color: 'from-accent-600 to-pink-600',
+            iconBg: 'bg-pink-100 dark:bg-pink-900/20',
+            iconColor: 'text-pink-600 dark:text-pink-400',
         },
         {
             icon: <Smartphone className="w-8 h-8" />,
             title: 'Multi-Device',
             description: 'Access your finances from any device, anywhere',
-            color: 'from-teal-400 to-teal-600',
+            color: 'from-primary-500 to-accent-500',
+            iconBg: 'bg-primary-100 dark:bg-primary-900/20',
+            iconColor: 'text-primary-600 dark:text-primary-400',
         },
     ];
 
@@ -205,8 +217,11 @@ export default function Home() {
             <HomeThemeToggle />
 
             {/* Animated Background */}
-            <div className="fixed inset-0 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-dark-950 dark:via-dark-900 dark:to-dark-950 -z-10">
-                <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+            <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-dark-950 dark:via-dark-900 dark:to-dark-950 -z-10">
+                {/* Animated gradient orbs */}
+                <div className="absolute top-20 left-10 w-72 h-72 bg-primary-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+                <div className="absolute top-40 right-10 w-72 h-72 bg-accent-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+                <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
             </div>
 
             {/* Hero Section */}
@@ -226,145 +241,257 @@ export default function Home() {
                         className="text-center mb-8"
                     >
                         <motion.div
-                            initial={{ scale: 0, rotate: -10 }}
-                            animate={{ scale: 1, rotate: 0 }}
+                            initial={{ scale: 0, y: -20 }}
+                            animate={{ scale: 1, y: 0 }}
                             transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
                             className="inline-block"
                         >
-                            <span className="bg-gradient-to-r from-primary-500 to-accent-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg flex items-center gap-2">
-                                <Sparkles className="w-4 h-4" />
-                                🇧🇩 Built for Bangladesh
-                            </span>
+                            <div className="relative">
+                                <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-accent-600 rounded-full blur-lg opacity-50 animate-pulse"></div>
+                                <span className="relative bg-gradient-to-r from-primary-600 to-accent-600 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-2xl flex items-center gap-2 border border-white/20">
+                                    <Sparkles className="w-4 h-4 animate-pulse" />
+                                    🇧🇩 Built for Bangladesh • AI-Powered
+                                    <Rocket className="w-4 h-4" />
+                                </span>
+                            </div>
                         </motion.div>
                     </motion.div>
 
                     {/* Main Headline */}
-                    <motion.div variants={itemVariants} className="text-center mb-12">
-                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-                            <span className="inline-block">
-                                <span className="bg-gradient-to-r from-primary-500 via-accent-500 to-primary-600 bg-clip-text text-transparent animate-gradient">
-                                    Master Your
+                    <motion.div variants={itemVariants} className="text-center mb-16">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                        >
+                            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black text-gray-900 dark:text-white mb-8 leading-tight tracking-tight">
+                                <span className="inline-block mb-2">
+                                    <span className="relative">
+                                        <span className="bg-gradient-to-r from-primary-600 via-primary-500 to-accent-600 bg-clip-text text-transparent">
+                                            Smart Finance
+                                        </span>
+                                        <motion.div
+                                            className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-accent-600 opacity-20 blur-2xl -z-10"
+                                            animate={{ scale: [1, 1.1, 1] }}
+                                            transition={{ duration: 3, repeat: Infinity }}
+                                        />
+                                    </span>
                                 </span>
-                            </span>
-                            <br />
-                            <span className="relative">
-                                <span className="dark:text-white">Financial Future</span>
-                                <motion.div
-                                    className="absolute -bottom-4 left-0 right-0 h-3 bg-gradient-to-r from-primary-400 to-accent-400 opacity-30 rounded-full"
-                                    initial={{ scaleX: 0 }}
-                                    animate={{ scaleX: 1 }}
-                                    transition={{ delay: 0.5, duration: 0.8 }}
-                                />
-                            </span>
-                        </h1>
+                                <br />
+                                <span className="relative inline-block">
+                                    Made
+                                    <motion.span
+                                        className="ml-4 relative"
+                                        animate={{ rotate: [0, 5, 0, -5, 0] }}
+                                        transition={{ duration: 2, repeat: Infinity }}
+                                    >
+                                        <span className="bg-gradient-to-r from-accent-600 via-pink-500 to-primary-600 bg-clip-text text-transparent">
+                                            Simple
+                                        </span>
+                                    </motion.span>
+                                </span>
+                            </h1>
+                        </motion.div>
 
-                        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-                            AI-powered finance management for Bangladesh. Track expenses, get insights, 
-                            and achieve your financial goals—all in BDT 💰
-                        </p>
+                        <motion.p 
+                            className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed font-medium"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.5 }}
+                        >
+                            Transform your financial life with
+                            <span className="text-primary-600 dark:text-primary-400 font-bold"> AI-powered insights</span>,
+                            beautiful analytics, and effortless expense tracking.
+                            <br className="hidden md:block" />
+                            <span className="inline-flex items-center gap-2 mt-2">
+                                All in Bangladeshi Taka 💰
+                            </span>
+                        </motion.p>
 
                         {/* CTA Buttons */}
                         <motion.div
                             variants={itemVariants}
-                            className="flex gap-4 justify-center flex-wrap mb-12"
+                            className="flex gap-6 justify-center flex-wrap mb-12"
                         >
-                            <Link
-                                href="/auth/register"
-                                className="group relative px-10 py-5 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-2xl font-bold text-lg shadow-2xl hover:shadow-3xl transition-all transform hover:scale-105 overflow-hidden"
-                            >
-                                <span className="relative z-10 flex items-center gap-2">
-                                    Get Started Free
-                                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                </span>
-                                <div className="absolute inset-0 bg-gradient-to-r from-accent-500 to-primary-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </Link>
-                            <Link
-                                href="/auth/signin"
-                                className="px-10 py-5 bg-white dark:bg-dark-800 text-gray-700 dark:text-gray-200 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl border-2 border-gray-200 dark:border-dark-600 hover:border-primary-400 dark:hover:border-primary-400 transition-all transform hover:scale-105"
-                            >
-                                Sign In
-                            </Link>
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                <Link
+                                    href="/auth/register"
+                                    className="group relative px-12 py-5 bg-gradient-to-r from-primary-600 via-primary-500 to-accent-600 text-white rounded-2xl font-bold text-lg shadow-2xl overflow-hidden inline-flex items-center gap-3"
+                                >
+                                    <span className="relative z-10 flex items-center gap-2">
+                                        <Rocket className="w-5 h-5" />
+                                        Get Started Free
+                                        <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                                    </span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-accent-600 via-primary-600 to-primary-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <div className="absolute inset-0 bg-white/20 blur-xl"></div>
+                                    </div>
+                                </Link>
+                            </motion.div>
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                <Link
+                                    href="/auth/signin"
+                                    className="group px-12 py-5 bg-white dark:bg-dark-800 text-primary-600 dark:text-primary-400 rounded-2xl font-bold text-lg shadow-lg hover:shadow-2xl border-2 border-primary-200 dark:border-primary-900 hover:border-primary-600 dark:hover:border-primary-400 transition-all inline-flex items-center gap-2 backdrop-blur-sm"
+                                >
+                                    <Lock className="w-5 h-5" />
+                                    Sign In
+                                    <ArrowRight className="w-5 h-5 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                                </Link>
+                            </motion.div>
                         </motion.div>
 
                         {/* Trust Indicators */}
                         <motion.div 
                             variants={itemVariants}
-                            className="flex items-center justify-center gap-6 text-sm text-gray-500 dark:text-gray-400 flex-wrap"
+                            className="flex items-center justify-center gap-8 text-sm text-gray-600 dark:text-gray-400 flex-wrap"
                         >
-                            <div className="flex items-center gap-2">
-                                <CheckCircle2 className="w-5 h-5 text-green-500" />
-                                <span>No credit card required</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <CheckCircle2 className="w-5 h-5 text-green-500" />
-                                <span>Free forever plan</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <CheckCircle2 className="w-5 h-5 text-green-500" />
-                                <span>Cancel anytime</span>
-                            </div>
+                            <motion.div 
+                                className="flex items-center gap-2 bg-white/60 dark:bg-dark-800/60 px-4 py-2 rounded-full backdrop-blur-sm border border-gray-200 dark:border-dark-700"
+                                whileHover={{ scale: 1.05 }}
+                            >
+                                <CheckCircle2 className="w-5 h-5 text-success-500" />
+                                <span className="font-medium">No credit card</span>
+                            </motion.div>
+                            <motion.div 
+                                className="flex items-center gap-2 bg-white/60 dark:bg-dark-800/60 px-4 py-2 rounded-full backdrop-blur-sm border border-gray-200 dark:border-dark-700"
+                                whileHover={{ scale: 1.05 }}
+                            >
+                                <CheckCircle2 className="w-5 h-5 text-success-500" />
+                                <span className="font-medium">Free forever</span>
+                            </motion.div>
+                            <motion.div 
+                                className="flex items-center gap-2 bg-white/60 dark:bg-dark-800/60 px-4 py-2 rounded-full backdrop-blur-sm border border-gray-200 dark:border-dark-700"
+                                whileHover={{ scale: 1.05 }}
+                            >
+                                <CheckCircle2 className="w-5 h-5 text-success-500" />
+                                <span className="font-medium">Cancel anytime</span>
+                            </motion.div>
                         </motion.div>
                     </motion.div>
 
                     {/* Animated Dashboard Preview */}
                     <motion.div
                         variants={itemVariants}
-                        className="relative max-w-6xl mx-auto"
+                        className="relative max-w-6xl mx-auto mt-8"
                     >
-                        <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 dark:from-dark-800 dark:to-dark-900 rounded-3xl shadow-2xl overflow-hidden border-8 border-gray-800 dark:border-dark-700">
-                            <div className="absolute top-0 left-0 right-0 h-10 bg-gray-800 dark:bg-dark-700 flex items-center px-4 gap-2">
-                                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                        {/* Glow effect */}
+                        <div className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-accent-600 rounded-3xl blur-2xl opacity-20"></div>
+                        
+                        <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900 rounded-3xl shadow-2xl overflow-hidden border border-gray-700 dark:border-dark-700">
+                            {/* Browser chrome */}
+                            <div className="bg-gray-800 dark:bg-dark-800 px-4 py-3 flex items-center gap-2 border-b border-gray-700 dark:border-dark-700">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors cursor-pointer"></div>
+                                    <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors cursor-pointer"></div>
+                                    <div className="w-3 h-3 rounded-full bg-success-500 hover:bg-success-400 transition-colors cursor-pointer"></div>
+                                </div>
+                                <div className="flex-1 ml-4">
+                                    <div className="bg-gray-700 dark:bg-dark-700 rounded-lg px-4 py-1.5 text-xs text-gray-400 max-w-md">
+                                        🔒 financeapp.com/dashboard
+                                    </div>
+                                </div>
                             </div>
-                            <div className="pt-10 p-8 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-dark-900 dark:to-dark-800 min-h-[400px] flex items-center justify-center">
-                                <div className="text-center">
+                            
+                            {/* Dashboard content */}
+                            <div className="relative p-8 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900 min-h-[450px] overflow-hidden">
+                                {/* Background pattern */}
+                                <div className="absolute inset-0 opacity-5">
+                                    <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
+                                </div>
+                                
+                                <div className="relative z-10 text-center">
                                     <motion.div
                                         animate={{ 
-                                            scale: [1, 1.1, 1],
-                                            rotate: [0, 5, -5, 0],
+                                            scale: [1, 1.05, 1],
                                         }}
                                         transition={{ 
-                                            duration: 3,
+                                            duration: 4,
                                             repeat: Infinity,
-                                            repeatType: "reverse"
+                                            ease: "easeInOut"
                                         }}
                                     >
-                                        <PieChart className="w-32 h-32 mx-auto text-primary-500 mb-4" />
+                                        <div className="inline-block p-6 bg-gradient-to-br from-primary-600 to-accent-600 rounded-3xl shadow-2xl mb-6">
+                                            <LineChart className="w-32 h-32 text-white" strokeWidth={1.5} />
+                                        </div>
                                     </motion.div>
-                                    <p className="text-2xl font-bold text-gray-700 dark:text-gray-300">Beautiful Analytics Dashboard</p>
-                                    <p className="text-gray-500 dark:text-gray-400 mt-2">Track everything in real-time</p>
+                                    <h3 className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent mb-3">
+                                        Beautiful Analytics Dashboard
+                                    </h3>
+                                    <p className="text-gray-600 dark:text-gray-400 text-lg">Track everything in real-time with AI insights</p>
+                                    
+                                    {/* Stats preview */}
+                                    <div className="mt-8 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+                                        {[
+                                            { label: 'Income', value: '৳45.2K', color: 'from-success-500 to-success-600' },
+                                            { label: 'Expenses', value: '৳28.9K', color: 'from-primary-500 to-primary-600' },
+                                            { label: 'Savings', value: '৳16.3K', color: 'from-accent-500 to-accent-600' },
+                                        ].map((stat, i) => (
+                                            <motion.div
+                                                key={i}
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: 1 + i * 0.2, repeat: Infinity, repeatDelay: 3 }}
+                                                className="bg-white/80 dark:bg-dark-800/80 backdrop-blur-sm rounded-2xl p-4 border border-gray-200 dark:border-dark-700 shadow-lg"
+                                            >
+                                                <div className={`text-sm text-gray-600 dark:text-gray-400 mb-1`}>{stat.label}</div>
+                                                <div className={`text-2xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>{stat.value}</div>
+                                            </motion.div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         {/* Floating Cards */}
                         <motion.div
-                            animate={{ y: [0, -10, 0] }}
-                            transition={{ duration: 3, repeat: Infinity }}
-                            className="absolute -right-4 top-20 bg-white dark:bg-dark-800 rounded-2xl shadow-xl p-4 border border-gray-200 dark:border-dark-700 hidden lg:block"
+                            animate={{ y: [0, -15, 0] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute -right-6 top-24 bg-white/90 dark:bg-dark-800/90 backdrop-blur-xl rounded-3xl shadow-2xl p-5 border border-primary-200 dark:border-dark-700 hidden lg:block"
+                            style={{ boxShadow: '0 20px 50px rgba(14, 165, 233, 0.2)' }}
                         >
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
-                                    <TrendingUp className="w-6 h-6 text-white" />
+                            <div className="flex items-center gap-4">
+                                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-success-500 to-success-600 flex items-center justify-center shadow-lg">
+                                    <TrendingUp className="w-7 h-7 text-white" strokeWidth={2.5} />
                                 </div>
                                 <div>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">This Month</p>
-                                    <p className="text-xl font-bold text-gray-900 dark:text-white">৳45,230</p>
+                                    <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">This Month</p>
+                                    <p className="text-2xl font-black bg-gradient-to-r from-success-600 to-success-700 bg-clip-text text-transparent">৳45,230</p>
+                                    <p className="text-xs text-success-600 dark:text-success-400 font-semibold">↑ 12% increase</p>
                                 </div>
                             </div>
                         </motion.div>
                         <motion.div
-                            animate={{ y: [0, 10, 0] }}
-                            transition={{ duration: 2.5, repeat: Infinity }}
-                            className="absolute -left-4 bottom-20 bg-white dark:bg-dark-800 rounded-2xl shadow-xl p-4 border border-gray-200 dark:border-dark-700 hidden lg:block"
+                            animate={{ y: [0, 15, 0] }}
+                            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute -left-6 bottom-32 bg-white/90 dark:bg-dark-800/90 backdrop-blur-xl rounded-3xl shadow-2xl p-5 border border-accent-200 dark:border-dark-700 hidden lg:block"
+                            style={{ boxShadow: '0 20px 50px rgba(168, 85, 247, 0.2)' }}
                         >
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
-                                    <Zap className="w-6 h-6 text-white" />
+                            <div className="flex items-center gap-4">
+                                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center shadow-lg relative">
+                                    <Brain className="w-7 h-7 text-white" strokeWidth={2.5} />
+                                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-success-500 rounded-full border-2 border-white animate-pulse"></div>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">AI Insights</p>
-                                    <p className="text-sm font-bold text-gray-900 dark:text-white">Save 15% more</p>
+                                    <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">AI Insight</p>
+                                    <p className="text-lg font-black text-gray-900 dark:text-white">Save 15% more</p>
+                                    <p className="text-xs text-accent-600 dark:text-accent-400 font-semibold">Powered by Gemini</p>
+                                </div>
+                            </div>
+                        </motion.div>
+                        <motion.div
+                            animate={{ 
+                                y: [0, -12, 0],
+                                rotate: [0, 2, 0, -2, 0]
+                            }}
+                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute -top-12 left-1/4 bg-white/90 dark:bg-dark-800/90 backdrop-blur-xl rounded-3xl shadow-2xl p-4 border border-primary-200 dark:border-dark-700 hidden xl:block"
+                            style={{ boxShadow: '0 20px 50px rgba(14, 165, 233, 0.15)' }}
+                        >
+                            <div className="flex items-center gap-3">
+                                <Shield className="w-8 h-8 text-primary-600 dark:text-primary-400" strokeWidth={2.5} />
+                                <div>
+                                    <p className="text-sm font-bold text-gray-900 dark:text-white">Bank-Grade Security</p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">Your data is safe</p>
                                 </div>
                             </div>
                         </motion.div>
@@ -373,7 +500,12 @@ export default function Home() {
             </motion.section>
 
             {/* Stats Section */}
-            <section className="py-20 bg-gradient-to-br from-primary-500 to-accent-500 dark:from-primary-700 dark:to-accent-700">
+            <section className="relative py-24 bg-gradient-to-br from-primary-600 via-primary-500 to-accent-600 dark:from-primary-800 dark:via-primary-700 dark:to-accent-800 overflow-hidden">
+                {/* Animated background elements */}
+                <div className="absolute inset-0 opacity-10">
+                    <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl animate-blob"></div>
+                    <div className="absolute bottom-10 right-10 w-96 h-96 bg-accent-200 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
+                </div>
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
                         {stats.map((stat, index) => (
