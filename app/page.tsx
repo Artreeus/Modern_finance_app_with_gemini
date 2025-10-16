@@ -10,7 +10,8 @@ import {
     TrendingUp, Shield, Zap, BarChart3, ArrowRight, CheckCircle2, 
     Users, Star, Quote, FileText, CreditCard, Wallet, 
     PieChart, TrendingDown, Lock, Cloud, Smartphone, Download,
-    ChevronDown, Sparkles, Target, Clock, Rocket, Brain, LineChart
+    ChevronDown, Sparkles, Target, Clock, Rocket, Brain, LineChart,
+    Bell, DollarSign, Globe, TrendingDown as TrendingDownIcon, Award, Repeat
 } from 'lucide-react';
 
 export default function Home() {
@@ -62,52 +63,76 @@ export default function Home() {
 
     const features = [
         {
-            icon: <TrendingUp className="w-8 h-8" />,
-            title: 'Smart Tracking',
-            description: 'Automatically categorize and track every transaction in BDT',
+            icon: <Brain className="w-8 h-8" />,
+            title: 'AI Financial Advisor',
+            description: 'Get personalized insights and recommendations from Gemini AI',
+            color: 'from-accent-500 to-accent-600',
+            iconBg: 'bg-accent-100 dark:bg-accent-900/20',
+            iconColor: 'text-accent-600 dark:text-accent-400',
+        },
+        {
+            icon: <Target className="w-8 h-8" />,
+            title: 'Financial Goals',
+            description: 'Set and track savings goals with AI-powered timeline predictions',
+            color: 'from-success-500 to-success-600',
+            iconBg: 'bg-success-100 dark:bg-success-900/20',
+            iconColor: 'text-success-600 dark:text-success-400',
+        },
+        {
+            icon: <Bell className="w-8 h-8" />,
+            title: 'Smart Reminders',
+            description: 'Never miss a bill with intelligent payment reminders',
+            color: 'from-primary-500 to-primary-600',
+            iconBg: 'bg-primary-100 dark:bg-primary-900/20',
+            iconColor: 'text-primary-600 dark:text-primary-400',
+        },
+        {
+            icon: <Globe className="w-8 h-8" />,
+            title: 'Multi-Currency',
+            description: 'Support for 150+ currencies with real-time exchange rates',
+            color: 'from-primary-600 to-accent-600',
+            iconBg: 'bg-primary-100 dark:bg-primary-900/20',
+            iconColor: 'text-primary-600 dark:text-primary-400',
+        },
+        {
+            icon: <Award className="w-8 h-8" />,
+            title: 'Financial Health Score',
+            description: 'Track your financial wellness with a personalized score',
+            color: 'from-accent-500 to-pink-600',
+            iconBg: 'bg-pink-100 dark:bg-pink-900/20',
+            iconColor: 'text-pink-600 dark:text-pink-400',
+        },
+        {
+            icon: <Repeat className="w-8 h-8" />,
+            title: 'Budget Planner',
+            description: 'Envelope budgeting system with overspending alerts',
+            color: 'from-primary-500 to-primary-600',
+            iconBg: 'bg-primary-100 dark:bg-primary-900/20',
+            iconColor: 'text-primary-600 dark:text-primary-400',
+        },
+        {
+            icon: <Users className="w-8 h-8" />,
+            title: 'Expense Sharing',
+            description: 'Split bills and track shared expenses with friends',
             color: 'from-success-500 to-success-600',
             iconBg: 'bg-success-100 dark:bg-success-900/20',
             iconColor: 'text-success-600 dark:text-success-400',
         },
         {
             icon: <BarChart3 className="w-8 h-8" />,
-            title: 'Visual Analytics',
-            description: 'Beautiful charts and insights to understand your spending',
-            color: 'from-primary-500 to-primary-600',
+            title: 'Advanced Analytics',
+            description: 'Interactive charts and deep insights into your spending',
+            color: 'from-primary-500 to-accent-500',
             iconBg: 'bg-primary-100 dark:bg-primary-900/20',
             iconColor: 'text-primary-600 dark:text-primary-400',
-        },
-        {
-            icon: <Brain className="w-8 h-8" />,
-            title: 'AI Powered',
-            description: 'Get personalized financial advice from Gemini AI',
-            color: 'from-accent-500 to-accent-600',
-            iconBg: 'bg-accent-100 dark:bg-accent-900/20',
-            iconColor: 'text-accent-600 dark:text-accent-400',
         },
         {
             icon: <Shield className="w-8 h-8" />,
             title: 'Bank-Grade Security',
-            description: 'Your data is encrypted and stored securely in the cloud',
+            description: 'Military-grade encryption and secure cloud storage',
             color: 'from-primary-600 to-primary-700',
             iconBg: 'bg-primary-100 dark:bg-primary-900/20',
             iconColor: 'text-primary-700 dark:text-primary-300',
-        },
-        {
-            icon: <FileText className="w-8 h-8" />,
-            title: 'PDF Reports',
-            description: 'Download detailed monthly reports with one click',
-            color: 'from-accent-600 to-pink-600',
-            iconBg: 'bg-pink-100 dark:bg-pink-900/20',
-            iconColor: 'text-pink-600 dark:text-pink-400',
-        },
-        {
-            icon: <Smartphone className="w-8 h-8" />,
-            title: 'Multi-Device',
-            description: 'Access your finances from any device, anywhere',
-            color: 'from-primary-500 to-accent-500',
-            iconBg: 'bg-primary-100 dark:bg-primary-900/20',
-            iconColor: 'text-primary-600 dark:text-primary-400',
         },
     ];
 
@@ -248,9 +273,9 @@ export default function Home() {
                         >
                             <div className="relative">
                                 <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-accent-600 rounded-full blur-lg opacity-50 animate-pulse"></div>
-                                <span className="relative bg-gradient-to-r from-primary-600 to-accent-600 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-2xl flex items-center gap-2 border border-white/20">
+                            <span className="relative bg-gradient-to-r from-primary-600 to-accent-600 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-2xl flex items-center gap-2 border border-white/20">
                                     <Sparkles className="w-4 h-4 animate-pulse" />
-                                    🇧🇩 Built for Bangladesh • AI-Powered
+                                    🌍 Global • AI-Powered • Smart
                                     <Rocket className="w-4 h-4" />
                                 </span>
                             </div>
@@ -267,8 +292,8 @@ export default function Home() {
                             <h1 className="text-6xl md:text-7xl lg:text-8xl font-black text-gray-900 dark:text-white mb-8 leading-tight tracking-tight">
                                 <span className="inline-block mb-2">
                                     <span className="relative">
-                                        <span className="bg-gradient-to-r from-primary-600 via-primary-500 to-accent-600 bg-clip-text text-transparent">
-                                            Smart Finance
+                                        <span className="bg-gradient-to-r from-primary-600 via-accent-500 to-primary-600 bg-clip-text text-transparent">
+                                            Finova
                                         </span>
                                         <motion.div
                                             className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-accent-600 opacity-20 blur-2xl -z-10"
@@ -278,17 +303,18 @@ export default function Home() {
                                     </span>
                                 </span>
                                 <br />
-                                <span className="relative inline-block">
-                                    Made
+                                <span className="relative inline-block text-gray-900 dark:text-white">
+                                    Your
                                     <motion.span
                                         className="ml-4 relative"
-                                        animate={{ rotate: [0, 5, 0, -5, 0] }}
+                                        animate={{ rotate: [0, 3, 0, -3, 0] }}
                                         transition={{ duration: 2, repeat: Infinity }}
                                     >
                                         <span className="bg-gradient-to-r from-accent-600 via-pink-500 to-primary-600 bg-clip-text text-transparent">
-                                            Simple
+                                            Financial
                                         </span>
                                     </motion.span>
+                                    {' '}Genius
                                 </span>
                             </h1>
                         </motion.div>
@@ -299,12 +325,13 @@ export default function Home() {
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.5 }}
                         >
-                            Transform your financial life with
+                            Master your money with
                             <span className="text-primary-600 dark:text-primary-400 font-bold"> AI-powered insights</span>,
-                            beautiful analytics, and effortless expense tracking.
+                            <span className="text-accent-600 dark:text-accent-400 font-bold"> smart budgeting</span>, and
+                            <span className="text-success-600 dark:text-success-400 font-bold"> goal tracking</span>.
                             <br className="hidden md:block" />
                             <span className="inline-flex items-center gap-2 mt-2">
-                                All in Bangladeshi Taka 💰
+                                🌍 Multi-currency • 🇧🇩 Built for Bangladesh
                             </span>
                         </motion.p>
 
@@ -833,9 +860,9 @@ export default function Home() {
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                             <div>
                                 <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">
-                                    Finance App
+                                    Finova
                                 </h3>
-                                <p className="text-gray-400 mb-4">Smart finance management for Bangladesh 🇧🇩</p>
+                                <p className="text-gray-400 mb-4">Your AI-Powered Financial Genius 🌍</p>
                                 <div className="flex gap-3">
                                     <a href="#" className="w-10 h-10 rounded-lg bg-gray-800 hover:bg-gray-700 flex items-center justify-center transition-colors">
                                         <span className="text-xl">𝕏</span>
@@ -877,7 +904,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-                            <p>© 2025 Finance App. Built with ❤️ for Bangladesh. All rights reserved.</p>
+                            <p>© 2025 Finova. Empowering financial freedom worldwide. All rights reserved.</p>
                         </div>
                     </div>
                 </div>

@@ -82,9 +82,9 @@ export default function RegisterPage() {
                                 <UserPlus className="w-8 h-8 text-white" />
                             </motion.div>
                             <h1 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-2">
-                                Join Finance App
+                                Join Finova
                             </h1>
-                            <p className="text-gray-600 dark:text-gray-400">Start your financial journey today</p>
+                            <p className="text-gray-600 dark:text-gray-400">Unlock your financial genius</p>
                         </div>
 
                         {/* Error Message */}

@@ -76,9 +76,9 @@ export default function SignInPage() {
                                 <Shield className="w-8 h-8 text-white" />
                             </motion.div>
                             <h1 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-2">
-                                Welcome Back!
+                                Welcome to Finova!
                             </h1>
-                            <p className="text-gray-600 dark:text-gray-400">Sign in to manage your finances</p>
+                            <p className="text-gray-600 dark:text-gray-400">Your financial genius awaits</p>
                         </div>
 
                         {/* Error Message */}

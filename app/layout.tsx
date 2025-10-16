@@ -6,8 +6,8 @@ import { Providers } from '@/components/Providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-    title: 'Finance App - Bangladesh',
-    description: 'Manage your finances in BDT with AI-powered insights',
+    title: 'Finova - AI-Powered Finance Management',
+    description: 'Smart finance management with AI insights, budget planning, goal tracking, and more. Built for Bangladesh and the world.',
 };
 
 export default function RootLayout({
