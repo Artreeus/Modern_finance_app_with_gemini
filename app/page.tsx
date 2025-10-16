@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { HomeThemeToggle } from '@/components/ui/HomeThemeToggle';
 import { 
     TrendingUp, Shield, Zap, BarChart3, ArrowRight, CheckCircle2, 
     Users, Star, Quote, FileText, CreditCard, Wallet, 
@@ -200,6 +201,9 @@ export default function Home() {
 
     return (
         <div className="min-h-screen bg-white dark:bg-dark-950 overflow-hidden">
+            {/* Theme Toggle Button */}
+            <HomeThemeToggle />
+
             {/* Animated Background */}
             <div className="fixed inset-0 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-dark-950 dark:via-dark-900 dark:to-dark-950 -z-10">
                 <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
