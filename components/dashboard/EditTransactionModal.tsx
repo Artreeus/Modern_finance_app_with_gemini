@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 interface Transaction {
     _id: string;
@@ -36,8 +37,11 @@ export function EditTransactionModal({ isOpen, transaction, onClose, onSuccess }
 
     useEffect(() => {
         if (transaction) {
+            // Convert 'transfer' to 'savings' for display
+            const displayType = transaction.type === 'transfer' ? 'savings' : transaction.type;
+            
             setFormData({
-                type: transaction.type,
+                type: displayType,
                 amount: transaction.amount.toString(),
                 category: transaction.category,
                 note: transaction.note,
@@ -65,27 +69,37 @@ export function EditTransactionModal({ isOpen, transaction, onClose, onSuccess }
         setError('');
 
         try {
+            // Convert savings to transfer for API compatibility
+            const apiType = formData.type === 'savings' ? 'transfer' : formData.type;
+            
             const response = await fetch(`/api/transactions/${transaction._id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    type: formData.type,
+                    type: apiType,
                     amount: parseFloat(formData.amount),
                     category: formData.category,
                     note: formData.note,
-                    occurredAt: new Date(formData.occurredAt),
+                    occurredAt: formData.occurredAt, // Send as string, API will convert
                 }),
             });
 
             if (response.ok) {
+                toast.success('Transaction updated successfully!');
                 onSuccess();
                 onClose();
             } else {
                 const data = await response.json();
-                setError(data.error || 'Failed to update transaction');
+                const errorMsg = data.details 
+                    ? `Validation error: ${data.details.map((d: any) => d.message).join(', ')}`
+                    : data.error || 'Failed to update transaction';
+                setError(errorMsg);
+                toast.error(errorMsg);
             }
         } catch (err) {
-            setError('Network error. Please try again.');
+            const errorMsg = 'Network error. Please try again.';
+            setError(errorMsg);
+            toast.error(errorMsg);
         } finally {
             setLoading(false);
         }
@@ -124,10 +138,22 @@ export function EditTransactionModal({ isOpen, transaction, onClose, onSuccess }
                             value={formData.type}
                             onChange={(e) => {
                                 const newType = e.target.value;
+                                // Get categories for new type
+                                let newCategories;
+                                switch (newType) {
+                                    case 'income':
+                                        newCategories = incomeCategories;
+                                        break;
+                                    case 'savings':
+                                        newCategories = savingsCategories;
+                                        break;
+                                    default:
+                                        newCategories = expenseCategories;
+                                }
                                 setFormData({ 
                                     ...formData, 
                                     type: newType,
-                                    category: getCategoriesByType()[0] || ''
+                                    category: newCategories[0] || ''
                                 });
                             }}
                             className="w-full px-4 py-2 border border-gray-300 dark:border-dark-600 bg-white dark:bg-dark-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
