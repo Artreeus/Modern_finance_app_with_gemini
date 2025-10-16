@@ -17,7 +17,7 @@ export function Card({ children, className = '', hover = false, delay = 0 }: Car
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay }}
             whileHover={hover ? { scale: 1.02, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' } : {}}
-            className={`bg-white rounded-xl shadow-md ${className}`}
+            className={`rounded-xl shadow-md ${className}`}
         >
             {children}
         </motion.div>

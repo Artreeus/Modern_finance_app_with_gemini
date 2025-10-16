@@ -9,7 +9,7 @@ import { TransactionList } from './TransactionList';
 import { AddTransactionModal } from './AddTransactionModal';
 import { MonthlySummary } from './MonthlySummary';
 import { AIAdvice } from './AIAdvice';
-import { Plus, LogOut, BarChart3, Settings, User } from 'lucide-react';
+import { Plus, LogOut, BarChart3, Settings, User, Target } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
@@ -27,10 +27,14 @@ export function DashboardClient() {
     }, []);
 
     const handleLogout = async () => {
-        toast.loading('Logging out...');
+        const loadingToast = toast.loading('Logging out...');
         await signOut({ redirect: false });
-        toast.success('Logged out successfully!');
-        router.push('/');
+        toast.dismiss(loadingToast);
+        toast.success('Logged out successfully!', { duration: 2000 });
+        setTimeout(() => {
+            toast.dismiss();
+            router.push('/');
+        }, 1000);
     };
 
     const handleTransactionSuccess = () => {
@@ -59,7 +63,7 @@ export function DashboardClient() {
                                 className="flex items-center gap-4"
                             >
                                 <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">
-                                    Finance App
+                                    Finova
                                 </h1>
                             </motion.div>
 
@@ -74,6 +78,14 @@ export function DashboardClient() {
                                     <User size={18} className="text-primary-600 dark:text-primary-400" />
                                     <span className="text-gray-700 dark:text-gray-300 font-medium">{session?.user?.name}</span>
                                 </motion.div>
+
+                                <Link
+                                    href="/dashboard/goals"
+                                    className="flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/50 transition-all transform hover:scale-105 border border-green-100 dark:border-green-800"
+                                >
+                                    <Target size={18} />
+                                    <span className="hidden md:inline font-medium">Goals</span>
+                                </Link>
 
                                 <Link
                                     href="/analytics"
