@@ -3,31 +3,33 @@ export function cn(...inputs: any[]) {
 }
 
 /**
- * Format BDT amount from paisa (integer) to readable string
- * @param paisa - Amount in paisa (BDT * 100)
- * @returns Formatted string like "৳1,234.56"
+ * Format amount as currency (using USD format with $ symbol)
+ * @param amount - Amount in dollars/BDT
+ * @returns Formatted string like "$1,234.56"
  */
-export function formatBDT(paisa: number): string {
-  const bdt = paisa / 100;
-  return new Intl.NumberFormat('bn-BD', {
+export function formatBDT(amount: number): string {
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'BDT',
+    currency: 'USD',
     minimumFractionDigits: 2,
-  }).format(bdt);
+    maximumFractionDigits: 2,
+  }).format(amount);
 }
 
 /**
- * Convert BDT to paisa
+ * Convert BDT to paisa (kept for backward compatibility)
+ * @deprecated No longer needed as amounts are stored directly
  */
 export function bdtToPaisa(bdt: number): number {
-  return Math.round(bdt * 100);
+  return bdt; // No conversion needed
 }
 
 /**
- * Convert paisa to BDT
+ * Convert paisa to BDT (kept for backward compatibility)
+ * @deprecated No longer needed as amounts are stored directly
  */
 export function paisaToBdt(paisa: number): number {
-  return paisa / 100;
+  return paisa; // No conversion needed
 }
 
 /**

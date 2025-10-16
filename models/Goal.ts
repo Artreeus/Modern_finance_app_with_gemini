@@ -4,8 +4,8 @@ export interface IGoal extends Document {
     userId: mongoose.Types.ObjectId;
     name: string;
     description?: string;
-    targetAmount: number; // in paisa
-    currentAmount: number; // in paisa
+    targetAmount: number; // in dollars
+    currentAmount: number; // in dollars
     category: 'savings' | 'investment' | 'debt' | 'emergency' | 'vacation' | 'education' | 'home' | 'retirement' | 'other';
     priority: 'low' | 'medium' | 'high';
     targetDate?: Date;

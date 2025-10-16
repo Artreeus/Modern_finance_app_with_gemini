@@ -79,12 +79,12 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         let needsRecalculation = false;
         
         if (targetAmount !== undefined && targetAmount !== goal.targetAmount) {
-            goal.targetAmount = Math.round(targetAmount);
+            goal.targetAmount = targetAmount; // Don't round, use as-is
             needsRecalculation = true;
         }
         
         if (currentAmount !== undefined) {
-            goal.currentAmount = Math.round(currentAmount);
+            goal.currentAmount = currentAmount; // Don't round, use as-is
             needsRecalculation = true;
         }
         
@@ -92,9 +92,9 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         if (needsRecalculation) {
             // Update milestone amounts based on new target
             goal.milestones = [
-                { percentage: 25, amount: Math.round(goal.targetAmount * 0.25), achieved: false },
-                { percentage: 50, amount: Math.round(goal.targetAmount * 0.50), achieved: false },
-                { percentage: 75, amount: Math.round(goal.targetAmount * 0.75), achieved: false },
+                { percentage: 25, amount: goal.targetAmount * 0.25, achieved: false },
+                { percentage: 50, amount: goal.targetAmount * 0.50, achieved: false },
+                { percentage: 75, amount: goal.targetAmount * 0.75, achieved: false },
                 { percentage: 100, amount: goal.targetAmount, achieved: false },
             ];
             

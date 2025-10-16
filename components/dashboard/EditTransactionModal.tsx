@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -21,6 +22,7 @@ interface EditTransactionModalProps {
 }
 
 export function EditTransactionModal({ isOpen, transaction, onClose, onSuccess }: EditTransactionModalProps) {
+    const [mounted, setMounted] = useState(false);
     const [formData, setFormData] = useState({
         type: 'expense',
         amount: '',
@@ -30,6 +32,11 @@ export function EditTransactionModal({ isOpen, transaction, onClose, onSuccess }
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        setMounted(true);
+        return () => setMounted(false);
+    }, []);
 
     const expenseCategories = ['Food', 'Transport', 'Shopping', 'Bills', 'Entertainment', 'Healthcare', 'Education', 'Other'];
     const incomeCategories = ['Salary', 'Freelance', 'Business', 'Investment', 'Gift', 'Other'];
@@ -105,11 +112,11 @@ export function EditTransactionModal({ isOpen, transaction, onClose, onSuccess }
         }
     };
 
-    if (!isOpen || !transaction) return null;
+    if (!isOpen || !transaction || !mounted) return null;
 
-    return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-dark-800 rounded-lg shadow-xl max-w-md w-full border border-gray-200 dark:border-dark-700">
+    return createPortal(
+        <div className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 flex items-center justify-center z-50 p-4 overflow-y-auto">
+            <div className="bg-white dark:bg-dark-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-dark-700 my-8">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-dark-700">
                     <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Edit Transaction</h2>
@@ -245,6 +252,7 @@ export function EditTransactionModal({ isOpen, transaction, onClose, onSuccess }
                     </div>
                 </form>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 }
