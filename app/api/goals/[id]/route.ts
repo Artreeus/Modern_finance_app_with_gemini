@@ -50,7 +50,16 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         }
 
         const body = await request.json();
-        const { currentAmount, ...updateData } = body;
+        const { 
+            name, 
+            description, 
+            category, 
+            priority, 
+            status, 
+            targetAmount, 
+            currentAmount, 
+            deadline 
+        } = body;
 
         const goal = await Goal.findOne({ _id: params.id, userId: user._id });
 
@@ -58,12 +67,38 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
             return NextResponse.json({ error: 'Goal not found' }, { status: 404 });
         }
 
-        // Update fields
-        Object.assign(goal, updateData);
-
-        // If updating current amount, also update milestones
+        // Update basic fields
+        if (name !== undefined) goal.name = name;
+        if (description !== undefined) goal.description = description;
+        if (category !== undefined) goal.category = category;
+        if (priority !== undefined) goal.priority = priority;
+        if (status !== undefined) goal.status = status;
+        if (deadline !== undefined) goal.targetDate = deadline ? new Date(deadline) : undefined;
+        
+        // Update amounts and recalculate milestones if needed
+        let needsRecalculation = false;
+        
+        if (targetAmount !== undefined && targetAmount !== goal.targetAmount) {
+            goal.targetAmount = Math.round(targetAmount);
+            needsRecalculation = true;
+        }
+        
         if (currentAmount !== undefined) {
             goal.currentAmount = Math.round(currentAmount);
+            needsRecalculation = true;
+        }
+        
+        // Recalculate milestones if target or current amount changed
+        if (needsRecalculation) {
+            // Update milestone amounts based on new target
+            goal.milestones = [
+                { percentage: 25, amount: Math.round(goal.targetAmount * 0.25), achieved: false },
+                { percentage: 50, amount: Math.round(goal.targetAmount * 0.50), achieved: false },
+                { percentage: 75, amount: Math.round(goal.targetAmount * 0.75), achieved: false },
+                { percentage: 100, amount: goal.targetAmount, achieved: false },
+            ];
+            
+            // Update milestone achievement status
             goal.updateMilestones();
             
             // Auto-complete goal if target reached

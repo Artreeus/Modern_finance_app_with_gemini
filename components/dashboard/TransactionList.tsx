@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { formatBDT } from '@/lib/utils';
+import { EditTransactionModal } from './EditTransactionModal';
+import { Edit2, Trash2 } from 'lucide-react';
 
 interface Transaction {
     _id: string;
@@ -16,24 +18,25 @@ interface Transaction {
 export function TransactionList({ month }: { month: string }) {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [loading, setLoading] = useState(true);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+
+    const fetchTransactions = async () => {
+        try {
+            const res = await fetch(`/api/transactions?month=${month}&limit=50`);
+            if (res.ok) {
+                const data = await res.json();
+                setTransactions(data.transactions);
+            }
+        } catch (error) {
+            console.error('Failed to fetch transactions:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         if (!month) return;
-
-        const fetchTransactions = async () => {
-            try {
-                const res = await fetch(`/api/transactions?month=${month}&limit=50`);
-                if (res.ok) {
-                    const data = await res.json();
-                    setTransactions(data.transactions);
-                }
-            } catch (error) {
-                console.error('Failed to fetch transactions:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchTransactions();
     }, [month]);
 
@@ -63,8 +66,9 @@ export function TransactionList({ month }: { month: string }) {
     }
 
     return (
-        <div className="space-y-3">
-            {transactions.map((txn) => (
+        <>
+            <div className="space-y-3">
+                {transactions.map((txn) => (
                 <div
                     key={txn._id}
                     className="border border-gray-200 dark:border-dark-600 rounded-lg p-4 hover:shadow-md dark:hover:shadow-xl transition bg-white dark:bg-dark-700/50"
@@ -90,20 +94,44 @@ export function TransactionList({ month }: { month: string }) {
                             </p>
                         </div>
                         <div className="text-right">
-                            <p className={`text-lg font-bold ${txn.type === 'income' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                            <p className={`text-lg font-bold mb-2 ${txn.type === 'income' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                                 {txn.type === 'income' ? '+' : '-'} {formatBDT(txn.amount)}
                             </p>
-                            <button
-                                onClick={() => handleDelete(txn._id)}
-                                className="text-xs text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 mt-2 font-medium"
-                            >
-                                Delete
-                            </button>
+                            <div className="flex items-center justify-end gap-2">
+                                <button
+                                    onClick={() => {
+                                        setSelectedTransaction(txn);
+                                        setShowEditModal(true);
+                                    }}
+                                    className="flex items-center gap-1 text-xs text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors"
+                                >
+                                    <Edit2 className="w-3 h-3" />
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(txn._id)}
+                                    className="flex items-center gap-1 text-xs text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-medium transition-colors"
+                                >
+                                    <Trash2 className="w-3 h-3" />
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            ))}
-        </div>
+                ))}
+            </div>
+
+            <EditTransactionModal
+                isOpen={showEditModal}
+                transaction={selectedTransaction}
+                onClose={() => {
+                    setShowEditModal(false);
+                    setSelectedTransaction(null);
+                }}
+                onSuccess={fetchTransactions}
+            />
+        </>
     );
 }
 

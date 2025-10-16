@@ -18,6 +18,7 @@ import {
     Home
 } from 'lucide-react';
 import AddGoalModal from '@/components/AddGoalModal';
+import EditGoalModal from '@/components/EditGoalModal';
 import toast, { Toaster } from 'react-hot-toast';
 
 interface Milestone {
@@ -47,6 +48,8 @@ export default function GoalsPage() {
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState<'all' | 'active' | 'completed' | 'paused'>('all');
     const [showAddModal, setShowAddModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null);
 
     useEffect(() => {
         if (status === 'unauthenticated') {
@@ -321,18 +324,13 @@ export default function GoalsPage() {
                                     <div className="flex gap-2 pt-4 border-t border-gray-200 dark:border-dark-700">
                                         <button
                                             onClick={() => {
-                                                const amount = prompt(
-                                                    'Enter new amount:',
-                                                    goal.currentAmount.toString()
-                                                );
-                                                if (amount) {
-                                                    updateProgress(goal._id, parseFloat(amount));
-                                                }
+                                                setSelectedGoal(goal);
+                                                setShowEditModal(true);
                                             }}
                                             className="flex-1 flex items-center justify-center gap-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors border border-blue-100 dark:border-blue-800"
                                         >
                                             <Edit2 className="w-4 h-4" />
-                                            Update
+                                            Edit
                                         </button>
                                         <button
                                             onClick={() => deleteGoal(goal._id)}
@@ -353,6 +351,20 @@ export default function GoalsPage() {
                 isOpen={showAddModal}
                 onClose={() => setShowAddModal(false)}
                 onSuccess={fetchGoals}
+            />
+
+            {/* Edit Goal Modal */}
+            <EditGoalModal
+                isOpen={showEditModal}
+                goal={selectedGoal}
+                onClose={() => {
+                    setShowEditModal(false);
+                    setSelectedGoal(null);
+                }}
+                onSuccess={() => {
+                    fetchGoals();
+                    toast.success('Goal updated successfully!');
+                }}
             />
         </div>
         </>
