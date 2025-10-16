@@ -90,10 +90,10 @@ GoalSchema.virtual('progress').get(function () {
 });
 
 // Check and update milestones
-GoalSchema.methods.updateMilestones = function () {
+GoalSchema.methods.updateMilestones = function (this: IGoal) {
     const progress = (this.currentAmount / this.targetAmount) * 100;
     
-    this.milestones.forEach((milestone) => {
+    this.milestones.forEach((milestone: IGoal['milestones'][0]) => {
         if (!milestone.achieved && progress >= milestone.percentage) {
             milestone.achieved = true;
             milestone.achievedAt = new Date();

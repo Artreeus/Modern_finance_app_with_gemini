@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { formatBDT } from '@/lib/utils';
 import { EditTransactionModal } from './EditTransactionModal';
 import { Edit2, Trash2 } from 'lucide-react';
@@ -21,7 +21,7 @@ export function TransactionList({ month }: { month: string }) {
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
 
-    const fetchTransactions = async () => {
+    const fetchTransactions = useCallback(async () => {
         try {
             const res = await fetch(`/api/transactions?month=${month}&limit=50`);
             if (res.ok) {
@@ -33,7 +33,7 @@ export function TransactionList({ month }: { month: string }) {
         } finally {
             setLoading(false);
         }
-    };
+    }, [month]);
 
     useEffect(() => {
         if (!month) return;

@@ -188,7 +188,7 @@ export function AnalyticsClient() {
                                         fill="#8884d8"
                                         dataKey="value"
                                     >
-                                        {categoryData.map((entry, index) => (
+                                        {categoryData.map((entry: any, index: number) => (
                                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                         ))}
                                     </Pie>

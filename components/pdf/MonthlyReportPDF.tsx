@@ -106,7 +106,7 @@ interface PDFData {
     }[];
 }
 
-export const MonthlyReportPDF: React.FC<{ data: PDFData }> = ({ data }) => (
+export const MonthlyReportPDF = ({ data }: { data: PDFData }) => (
     <Document>
         <Page size="A4" style={styles.page}>
             {/* Header */}

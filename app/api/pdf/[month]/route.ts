@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import connectDB from '@/lib/mongodb';
 import Transaction from '@/models/Transaction';
 import MonthlySummary from '@/models/MonthlySummary';
@@ -13,7 +13,7 @@ const renderPDF = async (data: any) => {
   const ReactPDF = await import('@react-pdf/renderer');
   const { MonthlyReportPDF } = await import('@/components/pdf/MonthlyReportPDF');
   
-  const doc = MonthlyReportPDF({ data });
+  const doc = React.createElement(MonthlyReportPDF, { data }) as React.ReactElement;
   const stream = await ReactPDF.renderToStream(doc);
   
   return new Promise<Buffer>((resolve, reject) => {
@@ -98,7 +98,7 @@ export async function GET(
       const pdfBuffer = await renderPDF(data);
 
       // Return PDF
-      return new NextResponse(pdfBuffer, {
+      return new NextResponse(new Uint8Array(pdfBuffer), {
         status: 200,
         headers: {
           'Content-Type': 'application/pdf',

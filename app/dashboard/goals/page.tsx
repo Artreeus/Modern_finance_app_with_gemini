@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -63,7 +63,7 @@ export default function GoalsPage() {
         }
     }, [status, filter]);
 
-    const fetchGoals = async () => {
+    const fetchGoals = useCallback(async () => {
         try {
             const url = filter === 'all' 
                 ? '/api/goals' 
@@ -78,7 +78,7 @@ export default function GoalsPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [filter]);
 
     const deleteGoal = async (id: string) => {
         if (!confirm('Are you sure you want to delete this goal?')) return;
